@@ -1,0 +1,4 @@
+There was an exception on host 172.20.1.1
+'regex_mac_key'
+Could not connect to router, could not preform ARP lookup, could not resolve MAC address. Exiting
+

@@ -1,0 +1,6 @@
+#hosts.txt example config file
+~ubiquiti_edgerouter
+!10.0.0.1
+~ubiquiti_edgeswitch
+10.0.0.10
+10.0.0.11
