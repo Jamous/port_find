@@ -1,6 +1,9 @@
-#hosts.txt example config file
+#hosts.txt config file
+!router
 ~ubiquiti_edgerouter
-!10.0.0.1
+10.0.0.1
+
+!switch
 ~ubiquiti_edgeswitch
 10.0.0.10
 10.0.0.11

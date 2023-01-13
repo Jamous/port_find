@@ -1,5 +1,6 @@
 Port-find
 ----------
+Version 1.0
 Port-find is a multithreaded python program that will search a lan network for a specific MAC or IP address. The goal of this project is to simplify finding what port a MAC or IP address is connected to in a large campus lan network.
 
 Dependincies
@@ -38,15 +39,18 @@ Each config file contains a list of switch addresses (IP or FQDN) that should be
 
 ‘~’ at the beginning of a line denotes a device type in the config file. Every address below this statement will be assumed to be of the device type listed in the config file. You can change device types at any time during the script.
 
-‘!’ at the beginning of a line denotes a router in the config file. If you wish to use IP adresses this flag must be set.
+‘!’ at the beginning of a line denotes node type. The script currently supports switches 'switch' and routers 'router'
 
-‘*’ denotes an password group. Any values put after the * will be the name of the new group (usefull for debugging.)
+‘*’ denotes a diffrent password will be used. You can add a name here '*My second password'. This will be displayed when you are prompted for the new password
 
 Standard config file example:
 ```
 #hosts.txt config file
+!router
 ~ubiquiti_edgerouter
-!10.0.0.1
+10.0.0.1
+
+!switch
 ~ubiquiti_edgeswitch
 10.0.0.10
 10.0.0.11
@@ -55,25 +59,26 @@ Standard config file example:
 Config file example using every option:
 ```
 #hosts.txt config file
-~ubiquiti_edgeswitch
 #These devices are treated as Ubiquity edge switches
+!switch
+~ubiquiti_edgeswitch
 10.0.0.10
 10.0.0.11
+
+#These devices are treated as Cisco routers
 ~cisco_ios
-#These devices are treated as Cisco switches
-!10.0.0.1 
-#This device is treated as a cisco router and used to look at arp tables
-10.0.20.10
-10.0.20.11
-~ubiquiti_edgeswitch
-#And these devices are treated as Ubiquity edge switches. They have a diffrent username and password than the abouve. We want to assign them a new password group.
-*password group two
-10.0.0.12
+!router
+10.0.0.1
+
+#This device is treated as a cisco switch with a diffrent set of login credentials
+!switch
+~cisco_ios
+10.0.0.2
 ```
 
 Verbose mode and logging
 ------------------------
-* Verbose mode is enabled with -v. This will give information about every device connected too and every match found. This will also diable the master main try/except statement. I did this to display traceback logs while tracking down errors. Verbose mode also enables output logging and exception logging.
+* Verbose mode is enabled with -v. This will give information about every device connected too and every match found. Verbose mode enables output logging and exception logging.
 * Logging: Logging can either be enabled by turning on verbose mode, or by activating the log below. There are two logs:
     * Output log: Enabled with --output this option will log all onscreen messages. If no logfile is specified it will use the default of log/output.txt.
     * Exception log: Enabled with --exceptions this option will log all exception messages (usually only seen in verbose mode). If no exceptions file is specified it will use the default of log/exceptions.txt.
@@ -86,4 +91,3 @@ This project uses Netmiko to create SSH connections. Currently only end devices 
 * Ubiquity Edge Routers (ubiquiti_edgerouter)
 * Ubiquity Edge Max switches (ubiquiti_edgeswitch)
 
-Each device is configured using the command_dictionary, which is a dictionary of dictionaries. The program references the command_dictionary frequently to determin the correct way to handle tasks. You are welcome to add entries to the command_dictionary. Command dictonarie entiers are unnique to each device type.
