@@ -118,7 +118,7 @@ class session_setup_class:
 
     def input_parser(self):
         #Parse inputs and save as input_values
-        parser = argparse.ArgumentParser(description='Portfind finds what port an IP or MAC address are in a campus lan. This program is located at ' + r'\\biznet\dfs\user\BiznetAdmin\Scripts\portfind' + '. Smiths landing is the default commandline variable.')
+        parser = argparse.ArgumentParser(description='Portfind finds what port an IP or MAC address are in a campus lan.')
         #default parameters
         parser.set_defaults(location='default', is_ip=False, exception_file=False, output_file=False, number=10, verbose=False, thread_count=None) #Set default values
         #Location parameters
